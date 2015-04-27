@@ -1,3 +1,9 @@
+##########################################
+#              Crowd Sourced             #  
+#   TRNG(True Random Number Generator)   #
+#         Written by Unkillable          #  
+#            Copyright 2015              #
+##########################################
 import TRNG
 import socket
 import multiprocessing
@@ -25,7 +31,7 @@ def rng(s):
 		s.send("PRIVMSG #entropy :%s\r\n" % rng.getSelf())
 		rng.append()
 		print "Sleeping for two minutes.."
-		time.sleep(120)
+		time.sleep(1201)
 if __name__ == "__main__":
 	jobs = []
 	s = socket.socket()

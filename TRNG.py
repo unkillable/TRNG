@@ -29,18 +29,14 @@ class RNG():
 				self.random_string += "1"
 			else:
 				pass
-			#print self.random_string
 
 	def xor(self):
 		if self.random_string < self.SCAN_LIMIT:
 			self.random_string = self.random_string + "0"
-		#split = [self.random_string[i:i+2] for i in range(0, len(self.random_string), 2)]
 		for pos, bit in enumerate(self.random_string):
 			next_bit = self.random_string[pos+1]
 			result = int(bit) ^ int(next_bit)
 			self.random_string = self.insert(self.random_string, str(bit), pos+1)
-		#self.random_string = random_string
-		#print self.random_string
 
 	def hex(self):
 		self.random_string = ''.join(hex(int(a, 2))[2:] for a in self.random_string.split())
