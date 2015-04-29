@@ -79,6 +79,7 @@ class RNG():
 			else:
 				random_string = random_string + pair
 		self.random_string = random_string
+		
 	def shift(self):
 		l = len(self.random_string)
 		seg1, seg2 = self.random_string[:l/2], self.random_string[l/2:]
