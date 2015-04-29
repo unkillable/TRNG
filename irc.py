@@ -23,15 +23,19 @@ def irc(s):
 			s.send("JOIN #entropy\r\n")
 def rng(s):
 	while True:
-		print "Generating random bits.."
-		rng = TRNG.RNG()
-		rng.generate()
-		rng.xor()
-		rng.hex()
+		print "Generating random string.." #State what is going to happen
+		rng = TRNG.RNG() #Start up a TRNG instance
+		rng.generate() #Generate some fresh data
+		rng.xor() #Xor the data
+		rng.randomize() #Multiply by time stamp in micro seconds
+		rng.xor() #Xor the data again
+		rng.hex() #Convert to hex
+		rng.hexToChars() #Convert printable hex values to chars
+		rng.shift() #Split data in half and combine data while shifting pos by 1
 		s.send("PRIVMSG #entropy :%s\r\n" % rng.getSelf())
 		rng.append()
 		print "Sleeping for two minutes.."
-		time.sleep(1201)
+		time.sleep(120)
 if __name__ == "__main__":
 	jobs = []
 	s = socket.socket()
