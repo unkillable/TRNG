@@ -9,7 +9,7 @@ import socket
 import multiprocessing
 import time
 def irc(s):
-	nick = "NICK RNG_\r\n"
+	nick = "NICK RNG\r\n"
 	user = "USER RNG RNG RNG :RNG\r\n"
 	s.send(nick)
 	s.send(user)
@@ -19,26 +19,23 @@ def irc(s):
 		print data
 		if "PING " in data:
 			s.send("PONG %s\r\n" % data.split(" ")[1])
-		if " 265 " in data:
+		if " 396 " in data:
 			s.send("JOIN #entropy\r\n")
 def rng(s):
 	while True:
-		try:
-			print "Generating random string.." #State what is going to happen
-			rng = TRNG.RNG() #Start up a TRNG instance
-			rng.generate() #Generate some fresh data
-			rng.xor() #Xor the data
-			rng.randomize() #Multiply by time stamp in micro seconds
-			rng.xor() #Xor the data again
-			rng.hex() #Convert to hex
-			rng.hexToChars() #Convert printable hex values to chars
-			#rng.shift() #Split data in half and combine data while shifting pos by 1
-			s.send("PRIVMSG #entropy :%s\r\n" % rng.getSelf())
-			rng.append()
-			print "Sleeping for two minutes.."
-			time.sleep(120)
-		except Exception as e:
-			pass
+		print "Generating random string.." #State what is going to happen
+		rng = TRNG.RNG() #Start up a TRNG instance
+		rng.generate() #Generate some fresh data
+		rng.xor() #Xor the data
+		rng.randomize() #Multiply by time stamp in micro seconds
+		rng.xor() #Xor the data again
+		rng.hex() #Convert to hex
+		rng.hexToChars() #Convert printable hex values to chars
+		rng.shift() #Split data in half and combine data while shifting pos by 1
+		s.send("PRIVMSG #entropy :%s\r\n" % rng.getSelf())
+		rng.append()
+		print "Sleeping for two minutes.."
+		time.sleep(120)
 if __name__ == "__main__":
 	jobs = []
 	s = socket.socket()

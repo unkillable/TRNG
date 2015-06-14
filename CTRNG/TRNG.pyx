@@ -9,7 +9,6 @@ import time
 import re
 import string
 from datetime import datetime
-import random
 class RNG():
 	def __init__(self): 
 		#Config variables
@@ -20,6 +19,7 @@ class RNG():
 
 	def generate(self):
 		#subreddit = r.get_subreddit(SUB_NAME) If you decide to use a sub reddit. (ILLEGAL)
+		cdef int first_timestamp, second_timestamp, third_timestamp, fourth_timestamp
 		new_submissions =  self.r.get_new(limit = self.SCAN_LIMIT)
 		for ID, submission in enumerate(new_submissions):
 			first_timestamp = submission.created_utc
@@ -45,10 +45,8 @@ class RNG():
 			self.random_string = self.random_string + "0"
 		for pos, bit in enumerate(self.random_string):
 			next_bit = self.random_string[pos+1]
-			result = int(bit) ^ int(next_bit) 
-			self.random_string = self.insert(self.random_string, str(result), pos+1)
-			self.random_string = self.random_string + str(result)
-		self.random_string = self.random_string + self.random_string[::-1]
+			result = int(bit) ^ int(next_bit)
+			self.random_string = self.insert(self.random_string, str(bit), pos+1)
 
 	def hex(self):
 		self.random_string = ''.join(hex(int(a, 2))[2:] for a in self.random_string.split()).replace("L", "")
@@ -79,9 +77,7 @@ class RNG():
 			if char.isalnum():
 				random_string = random_string + char.lower()
 			else:
-				char = pair[::-1].decode("hex")
-				if char.isalnum():
-					random_string = random_string + char.lower()				
+				random_string = random_string + pair
 		self.random_string = random_string
 		
 	def shift(self):
