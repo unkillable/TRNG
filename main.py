@@ -15,6 +15,7 @@ if __name__ == "__main__":
         rng.xor() #Xor the data
         rng.randomize() #Multiply by time stamp in micro seconds
         rng.xor() #Xor the data again
+        rng.xor() #Xor the data again to greatly expand length
         rng.hex() #Convert to hex
         rng.hexToChars() #Convert printable hex values to chars
         rng.shift() #Split data in half and combine data while shifting pos by 1
